@@ -1,0 +1,42 @@
+{
+    "name": "emotality/laravel-everlytic",
+    "description": "Laravel mail driver to send transactional emails via Everlytic.",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "everlytic",
+        "emails",
+        "transactional emails"
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/emotality/laravel-everlytic",
+    "authors": [
+        {
+            "name": "Jean-Pierre Fourie",
+            "homepage": "https://emotality.com",
+            "email": "jp@emotality.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "ext-json": "*",
+        "illuminate/http": "^9.0",
+        "illuminate/mail": "^9.0",
+        "illuminate/support": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Emotality\\Everlytic\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Emotality\\Everlytic\\EverlyticServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "version": "1.0.0"
+}
