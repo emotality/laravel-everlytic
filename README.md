@@ -22,7 +22,7 @@ Laravel mail driver to send transactional emails via Everlytic.
 ## Installation
 
 1. `composer require emotality/laravel-everlytic`
-2. Add the `everlytic` block to your `config/mail.php` file inside `mailers`:
+2. Add the `everlytic` block to the `mailers` array, inside your `config/mail.php` file:
 
 ```php
 'mailers' => [

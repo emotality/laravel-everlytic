@@ -160,6 +160,7 @@ class EverlyticMailTransport extends AbstractTransport
             }
         }
 
+        // Send request
         $response = $this->client->post('/api/2.0/trans_mails', [
             'headers'     => compact('from', 'reply_to', 'to', 'cc', 'subject'),
             'body'        => $body,
@@ -167,8 +168,9 @@ class EverlyticMailTransport extends AbstractTransport
             'options'     => $options,
         ]);
 
+        // Handle error
         if ($response->failed()) {
-            throw new EverlyticException($response->object()->error->message ?? 'Message failed to send!', $response->status());
+            throw new EverlyticException($response->object()->error->message ?? 'Email failed to send!', $response->status());
         }
     }
 
