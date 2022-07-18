@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Facade;
 class Everlytic extends Facade
 {
     /**
-     * {@inheritDoc}
+     * Get the registered name of the component.
+     *
+     * @return string
      */
     protected static function getFacadeAccessor()
     {

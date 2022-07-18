@@ -11,7 +11,7 @@ class EverlyticFacade
      *
      * @return \Emotality\Everlytic\EverlyticAPI
      */
-    private function api()
+    private static function api()
     {
         return app(EverlyticAPI::class);
     }
@@ -24,9 +24,9 @@ class EverlyticFacade
      * @return bool
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function sms(string $recipient, string $message) : bool
+    public static function sms(string $recipient, string $message) : bool
     {
-        return $this->api()->sendSms($recipient, $message);
+        return self::api()->sendSms($recipient, $message);
     }
 
     /**
@@ -37,12 +37,12 @@ class EverlyticFacade
      * @return array<string, bool>
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function smsMany(array $recipients, string $message) : array
+    public static function smsMany(array $recipients, string $message) : array
     {
         $response = [];
 
         foreach (array_unique($recipients) as $recipient) {
-            $response[$recipient] = $this->api()->sendSms(strval($recipient), $message);
+            $response[$recipient] = self::api()->sendSms(strval($recipient), $message);
         }
 
         return $response;
@@ -55,8 +55,8 @@ class EverlyticFacade
      * @return void
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function email(SentMessage $message) : void
+    public static function email(SentMessage $message) : void
     {
-        $this->api()->sendEmail($message);
+        self::api()->sendEmail($message);
     }
 }

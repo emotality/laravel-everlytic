@@ -23,6 +23,8 @@ class EverlyticAPI
 
     /**
      * EverlyticAPI constructor.
+     *
+     * @return void
      */
     public function __construct()
     {
@@ -64,7 +66,7 @@ class EverlyticAPI
      * @return void
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function runChecks()
+    public function runChecks() : void
     {
         if (! $this->hasCredentials()) {
             // Run: php artisan vendor:publish --provider="Emotality\Everlytic\EverlyticServiceProvider"
@@ -102,11 +104,13 @@ class EverlyticAPI
     }
 
     /**
+     * Handle API request to send an email.
+     *
      * @param  \Symfony\Component\Mailer\SentMessage  $message
      * @return void
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function sendEmail(SentMessage $message, array $options = [])
+    public function sendEmail(SentMessage $message, array $options = []) : void
     {
         $this->runChecks();
 

@@ -1,6 +1,6 @@
 {
     "name": "emotality/laravel-everlytic",
-    "description": "Laravel package to send transactional SMSes and emails via Everlytic (Laravel mail driver).",
+    "description": "Laravel package to send transactional SMSes and emails (mail driver) via Everlytic.",
     "type": "library",
     "keywords": [
         "laravel",
