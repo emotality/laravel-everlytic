@@ -1,4 +1,4 @@
-# Everlytic Mail Driver for Laravel
+# Everlytic for Laravel
 
 <p>
     <a href="https://packagist.org/packages/emotality/laravel-everlytic"><img src="https://img.shields.io/packagist/l/emotality/laravel-everlytic" alt="License"></a>
@@ -6,7 +6,7 @@
     <a href="https://packagist.org/packages/emotality/laravel-everlytic"><img src="https://img.shields.io/packagist/dt/emotality/laravel-everlytic" alt="Total Downloads"></a>
 </p>
 
-Laravel mail driver to send transactional emails via Everlytic.
+Laravel package to send transactional SMSes and emails via Everlytic (Laravel mail driver).
 
 <p>
     <a href="https://www.everlytic.com" target="_blank">
@@ -22,42 +22,64 @@ Laravel mail driver to send transactional emails via Everlytic.
 ## Installation
 
 1. `composer require emotality/laravel-everlytic`
-2. Add the `everlytic` block to the `mailers` array, inside your `config/mail.php` file:
+2. `php artisan vendor:publish --provider="Emotality\Everlytic\EverlyticServiceProvider"`
+3. Add the following lines to your `.env`:
+
+```
+EVERLYTIC_URL="https://<everlytic_url>.everlytic.net"
+EVERLYTIC_USERNAME="<everlytic_username>"
+EVERLYTIC_PASSWORD="<everlytic_password>"
+```
+
+4. Update the `MAIL_MAILER` in your `.env`:
+
+```
+MAIL_MAILER=everlytic
+```
+
+5. Add the `everlytic` block to the `mailers` array, inside your `config/mail.php` file:
 
 ```php
 'mailers' => [
     ...
     'everlytic' => [
         'transport' => 'everlytic',
-        'url' => env('EVERLYTIC_URL'),
-        'username' => env('EVERLYTIC_USERNAME'),
-        'password' => env('EVERLYTIC_PASSWORD'),
-        // Optional:
-        'options' => [
-            'track_opens' => true,
-            'track_links' => true,
-            'batch_send' => false,
-        ],
     ],
-    ...
-```
-
-3. Add the following to your `.env` file:
-
-```
-EVERLYTIC_URL="https://example.everlytic.net"
-EVERLYTIC_USERNAME=""
-EVERLYTIC_PASSWORD=""
-```
-4. Update your mail driver in your `.env` file: 
-
-```
-MAIL_MAILER=everlytic
+]
 ```
 
 ## Usage
 
+### Sending an email:
+
 Just send emails like you normally would! :smile:
+
+---
+
+### Sending an SMS to a single recipient:
+
+```php
+\Everlytic::sms('+27820000001', "1st Line\n2nd Line\n3rd Line");
+```
+
+Response will be a `bool`, `true` if successful, `false` if unsuccessful.
+
+---
+
+### Sending an SMS to multiple recipients:
+
+```php
+\Everlytic::smsMany(['+27820000001', '+27820000002'], "1st Line\n2nd Line\n3rd Line");
+```
+
+Response will be an array where the keys are the recipients' numbers, the values will be booleans:
+
+```php
+array:2 [▼
+  "+27820000001" => true
+  "+27820000002" => false
+]
+```
 
 ## License
 

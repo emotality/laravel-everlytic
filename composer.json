@@ -1,12 +1,14 @@
 {
     "name": "emotality/laravel-everlytic",
-    "description": "Laravel mail driver to send transactional emails via Everlytic.",
+    "description": "Laravel package to send transactional SMSes and emails via Everlytic (Laravel mail driver).",
     "type": "library",
     "keywords": [
         "laravel",
         "everlytic",
         "emails",
-        "transactional emails"
+        "transactional emails",
+        "sms",
+        "transactional sms"
     ],
     "license": "MIT",
     "homepage": "https://github.com/emotality/laravel-everlytic",
@@ -33,10 +35,13 @@
         "laravel": {
             "providers": [
                 "Emotality\\Everlytic\\EverlyticServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Everlytic": "Emotality\\Everlytic\\Everlytic"
+            }
         }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "1.0.0"
+    "version": "2.0.0"
 }
