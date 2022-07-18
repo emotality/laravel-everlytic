@@ -31,11 +31,6 @@ class EverlyticAPI
         $this->config = config('everlytic') ?? [];
 
         if ($this->hasCredentials()) {
-            $headers = [
-                'Accept'        => 'application/json',
-                'Authorization' => sprintf('Basic %s', base64_encode($this->config['username'].':'.$this->config['password'])),
-            ];
-
             $this->client = \Http::withOptions([
                 'base_uri'        => rtrim($this->config['url'], '/'),
                 'debug'           => false,
@@ -43,8 +38,7 @@ class EverlyticAPI
                 'version'         => 2.0,
                 'connect_timeout' => 30,
                 'timeout'         => 60,
-                'headers'         => $headers,
-            ]);
+            ])->withBasicAuth($this->config['username'], $this->config['password'])->acceptJson();
         }
     }
 
@@ -110,7 +104,7 @@ class EverlyticAPI
      * @return void
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function sendEmail(SentMessage $message, array $options = []) : void
+    public function sendEmail(SentMessage $message) : void
     {
         $this->runChecks();
 
@@ -196,13 +190,7 @@ class EverlyticAPI
             if (is_bool($value) || is_int($value)) {
                 $options[$option] = $value ? 'yes' : 'no';
             } elseif (is_string($value)) {
-                if (in_array(strtolower($value), ['yes', 'no'])) {
-                    $options[$option] = strtolower($value);
-                } elseif (in_array(strtolower($value), ['true', '1'])) {
-                    $options[$option] = 'yes';
-                } elseif (in_array(strtolower($value), ['false', '0'])) {
-                    $options[$option] = 'no';
-                }
+                $options[$option] = in_array(strtolower($value), ['yes', 'true', '1']) ? 'yes' : 'no';
             } else {
                 unset($options[$option]);
             }
@@ -232,10 +220,10 @@ class EverlyticAPI
      */
     private function emailError(string $message, int $code = 1337) : bool
     {
-        if ($this->config['exceptions']['email']) {
+        if ($this->config['exceptions']['email'] ?? true) {
             throw new EverlyticException($message, $code);
         } else {
-            \Log::error(sprintf('Everlytic Email Error: %s', $message));
+            \Log::critical(sprintf('Everlytic Email Error: "%s"', $message));
         }
 
         return false;
@@ -251,10 +239,10 @@ class EverlyticAPI
      */
     private function smsError(string $message, int $code = 1337) : bool
     {
-        if ($this->config['exceptions']['sms']) {
+        if ($this->config['exceptions']['sms'] ?? false) {
             throw new EverlyticException($message, $code);
         } else {
-            \Log::error(sprintf('Everlytic SMS Error: %s', $message));
+            \Log::critical(sprintf('Everlytic SMS Error: "%s"', $message));
         }
 
         return false;

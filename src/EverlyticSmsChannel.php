@@ -12,6 +12,7 @@ class EverlyticSmsChannel
      * @param  mixed  $notifiable
      * @param  \Illuminate\Notifications\Notification  $notification
      * @return void
+     * @throws \Emotality\Everlytic\EverlyticException
      */
     public function send($notifiable, Notification $notification)
     {
