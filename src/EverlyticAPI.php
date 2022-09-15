@@ -110,6 +110,8 @@ class EverlyticAPI
 
         $email = MessageConverter::toEmail($message->getOriginalMessage());
 
+        $to = $cc = $body = $attachments = [];
+
         // From
         if (count($email->getFrom())) {
             $from = $email->getFrom()[0];
@@ -128,8 +130,6 @@ class EverlyticAPI
 
         // To
         if (count($email->getTo())) {
-            $to = [];
-
             foreach ($email->getTo() as $recipient) {
                 $to[$recipient->getAddress()] = $recipient->getName();
             }
@@ -139,13 +139,9 @@ class EverlyticAPI
 
         // CC
         if (count($email->getCc())) {
-            $cc = [];
-
             foreach ($email->getCc() as $recipient) {
-                $to[$recipient->getAddress()] = $recipient->getName();
+                $cc[$recipient->getAddress()] = $recipient->getName();
             }
-        } else {
-            $cc = [];
         }
 
         // Subject
@@ -154,8 +150,6 @@ class EverlyticAPI
         }
 
         // Body
-        $body = [];
-
         if ($html = $email->getHtmlBody()) {
             $body['html'] = $html;
         }
@@ -170,8 +164,6 @@ class EverlyticAPI
 
         // Attachments
         if (count($email->getAttachments())) {
-            $attachments = [];
-
             foreach ($email->getAttachments() as $att) {
                 $attachments[] = [
                     'filename'   => $att->getFilename(),
@@ -179,8 +171,6 @@ class EverlyticAPI
                     'content_id' => $att->getContentId(),
                 ];
             }
-        } else {
-            $attachments = [];
         }
 
         // Options
