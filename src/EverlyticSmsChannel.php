@@ -10,11 +10,9 @@ class EverlyticSmsChannel
      * Send the given notification.
      *
      * @param  mixed  $notifiable
-     * @param  \Illuminate\Notifications\Notification  $notification
-     * @return void
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function send($notifiable, Notification $notification)
+    public function send($notifiable, Notification $notification): void
     {
         if (method_exists($notification, 'toEverlytic')) {
             $notification->toEverlytic($notifiable)->send();

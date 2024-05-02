@@ -2,6 +2,8 @@
 
 namespace Emotality\Everlytic;
 
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
 
 class EverlyticServiceProvider extends ServiceProvider
@@ -27,11 +29,11 @@ class EverlyticServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/everlytic.php' => config_path('everlytic.php'),
+                __DIR__.'/../config/everlytic.php' => App::configPath('everlytic.php'),
             ], 'config');
         }
 
-        \Mail::extend('everlytic', function () {
+        Mail::extend('everlytic', function () {
             return new EverlyticMailTransport();
         });
     }

@@ -6,26 +6,21 @@ class EverlyticSms
 {
     /**
      * SMS recipients.
-     *
-     * @var array $to
      */
-    protected $to = [];
+    protected array $to = [];
 
     /**
      * SMS message.
-     *
-     * @var string $message
      */
-    protected $message;
+    protected string $message;
 
     /**
      * EverlyticSms constructor.
      *
      * @param  string|array|null  $to
-     * @param  string|null  $message
      * @return void
      */
-    public function __construct($to = null, string $message = null)
+    public function __construct($to = null, ?string $message = null)
     {
         if ($to) {
             $this->to = is_array($to) ? $to : [$to];
@@ -37,10 +32,9 @@ class EverlyticSms
     /**
      * Add SMS recipient.
      *
-     * @param  string  $to
      * @return $this
      */
-    public function to(string $to)
+    public function to(string $to): self
     {
         $this->to[] = $to;
 
@@ -50,10 +44,9 @@ class EverlyticSms
     /**
      * Add many SMS recipients.
      *
-     * @param  array  $to
      * @return $this
      */
-    public function toMany(array $to)
+    public function toMany(array $to): self
     {
         $this->to = array_merge($this->to, $to);
 
@@ -63,10 +56,9 @@ class EverlyticSms
     /**
      * Set SMS body.
      *
-     * @param  string  $message
      * @return $this
      */
-    public function message(string $message)
+    public function message(string $message): self
     {
         $this->message = $message;
 
@@ -76,10 +68,9 @@ class EverlyticSms
     /**
      * Send SMS(es).
      *
-     * @return void
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function send()
+    public function send(): void
     {
         if (! count($this->to)) {
             throw new EverlyticException('SMS has no recipient(s) attached.');

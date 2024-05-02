@@ -2,6 +2,10 @@
 
 namespace Emotality\Everlytic;
 
+use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Mailer\SentMessage;
 use Symfony\Component\Mime\MessageConverter;
 
@@ -9,17 +13,13 @@ class EverlyticAPI
 {
     /**
      * The Everlytic API client.
-     *
-     * @var \Illuminate\Http\Client\PendingRequest
      */
-    protected $client;
+    protected PendingRequest $client;
 
     /**
      * The Everlytic config.
-     *
-     * @var array
      */
-    protected $config;
+    protected array $config;
 
     /**
      * EverlyticAPI constructor.
@@ -28,10 +28,10 @@ class EverlyticAPI
      */
     public function __construct()
     {
-        $this->config = config('everlytic') ?? [];
+        $this->config = Config::get('everlytic', []);
 
         if ($this->hasCredentials()) {
-            $this->client = \Http::withOptions([
+            $this->client = Http::withOptions([
                 'base_uri'        => rtrim($this->config['url'], '/'),
                 'debug'           => false,
                 'verify'          => true,
@@ -44,10 +44,8 @@ class EverlyticAPI
 
     /**
      * Check if credentials are set.
-     *
-     * @return bool
      */
-    public function hasCredentials() : bool
+    public function hasCredentials(): bool
     {
         return strlen($this->config['username'] ?? null)
             && strlen($this->config['password'] ?? null)
@@ -57,10 +55,9 @@ class EverlyticAPI
     /**
      * Run checks before sending API requests.
      *
-     * @return void
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function runChecks() : void
+    public function runChecks(): void
     {
         if (! $this->hasCredentials()) {
             // Run: php artisan vendor:publish --provider="Emotality\Everlytic\EverlyticServiceProvider"
@@ -74,12 +71,9 @@ class EverlyticAPI
     /**
      * Handle API request to send SMS(es).
      *
-     * @param  string  $recipient
-     * @param  string  $message
-     * @return bool
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function sendSms(string $recipient, string $message) : bool
+    public function sendSms(string $recipient, string $message): bool
     {
         $this->runChecks();
 
@@ -100,11 +94,9 @@ class EverlyticAPI
     /**
      * Handle API request to send an email.
      *
-     * @param  \Symfony\Component\Mailer\SentMessage  $message
-     * @return void
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    public function sendEmail(SentMessage $message) : void
+    public function sendEmail(SentMessage $message): void
     {
         $this->runChecks();
 
@@ -203,17 +195,14 @@ class EverlyticAPI
     /**
      * Throw exception or log error message.
      *
-     * @param  string  $message
-     * @param  int  $code
-     * @return bool
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    private function emailError(string $message, int $code = 1337) : bool
+    private function emailError(string $message, int $code = 1337): bool
     {
         if ($this->config['exceptions']['email'] ?? true) {
             throw new EverlyticException($message, $code);
         } else {
-            \Log::critical(sprintf('Everlytic Email Error: "%s"', $message));
+            Log::critical(sprintf('Everlytic Email Error: "%s"', $message));
         }
 
         return false;
@@ -222,17 +211,14 @@ class EverlyticAPI
     /**
      * Throw exception or log error message.
      *
-     * @param  string  $message
-     * @param  int  $code
-     * @return bool
      * @throws \Emotality\Everlytic\EverlyticException
      */
-    private function smsError(string $message, int $code = 1337) : bool
+    private function smsError(string $message, int $code = 1337): bool
     {
         if ($this->config['exceptions']['sms'] ?? false) {
             throw new EverlyticException($message, $code);
         } else {
-            \Log::critical(sprintf('Everlytic SMS Error: "%s"', $message));
+            Log::critical(sprintf('Everlytic SMS Error: "%s"', $message));
         }
 
         return false;

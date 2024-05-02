@@ -1,0 +1,37 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "array_indentation": true,
+        "binary_operator_spaces": {
+            "default": "single_space",
+            "operators": {
+                "=>": null
+            }
+        },
+        "phpdoc_separation": {
+            "groups": [
+                [
+                    "see",
+                    "since",
+                    "param",
+                    "return",
+                    "throws",
+                    "package",
+                    "author",
+                    "copyright",
+                    "license",
+                    "link",
+                    "custom",
+                    "named-arguments-supported"
+                ],
+                [
+                    "deprecated"
+                ]
+            ]
+        }
+    },
+    "exclude": [
+        "routes",
+        "repositories"
+    ]
+}
