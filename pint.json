@@ -29,9 +29,5 @@
                 ]
             ]
         }
-    },
-    "exclude": [
-        "routes",
-        "repositories"
-    ]
+    }
 }

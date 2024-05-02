@@ -31,32 +31,30 @@ class EverlyticSms
 
     /**
      * Add SMS recipient.
-     *
-     * @return $this
      */
     public function to(string $to): self
     {
         $this->to[] = $to;
+
+        $this->to = array_unique($this->to);
 
         return $this;
     }
 
     /**
      * Add many SMS recipients.
-     *
-     * @return $this
      */
     public function toMany(array $to): self
     {
         $this->to = array_merge($this->to, $to);
+
+        $this->to = array_unique($this->to);
 
         return $this;
     }
 
     /**
      * Set SMS body.
-     *
-     * @return $this
      */
     public function message(string $message): self
     {
