@@ -16,7 +16,7 @@ class EverlyticServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(EverlyticAPI::class, function () {
-            return new EverlyticAPI();
+            return new EverlyticAPI;
         });
     }
 
@@ -34,7 +34,7 @@ class EverlyticServiceProvider extends ServiceProvider
         }
 
         Mail::extend('everlytic', function () {
-            return new EverlyticMailTransport();
+            return new EverlyticMailTransport;
         });
     }
 }

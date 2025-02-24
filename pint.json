@@ -2,11 +2,16 @@
     "preset": "laravel",
     "rules": {
         "array_indentation": true,
+        "single_line_comment_spacing": false,
         "binary_operator_spaces": {
             "default": "single_space",
             "operators": {
                 "=>": null
             }
+        },
+        "native_function_invocation": {
+            "include": [],
+            "strict": true
         },
         "phpdoc_separation": {
             "groups": [
