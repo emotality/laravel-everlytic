@@ -13,10 +13,8 @@ class EverlyticMailTransport extends AbstractTransport
 {
     /**
      * Everlytic API class.
-     *
-     * @return \Emotality\Everlytic\EverlyticAPI
      */
-    private function api()
+    private function api(): EverlyticAPI
     {
         return App::get(EverlyticAPI::class);
     }

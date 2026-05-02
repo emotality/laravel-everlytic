@@ -22,17 +22,27 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "illuminate/http": "^9.0|^10.0|^11.0|^12.0",
-        "illuminate/notifications": "^9.0|^10.0|^11.0|^12.0",
-        "illuminate/support": "^9.0|^10.0|^11.0|^12.0",
+        "illuminate/http": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/notifications": "^9.0|^10.0|^11.0|^12.0|^13.0",
+        "illuminate/support": "^9.0|^10.0|^11.0|^12.0|^13.0",
         "symfony/mailer": "^6.0|^7.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.15"
+        "laravel/pint": "^1.21",
+        "orchestra/testbench": "^11.0",
+        "phpunit/phpunit": "^11.5"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     },
     "autoload": {
         "psr-4": {
             "Emotality\\Everlytic\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Emotality\\Everlytic\\Tests\\": "tests/"
         }
     },
     "extra": {
@@ -44,6 +54,9 @@
                 "Everlytic": "Emotality\\Everlytic\\Everlytic"
             }
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true

@@ -10,10 +10,8 @@ class EverlyticServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->singleton(EverlyticAPI::class, function () {
             return new EverlyticAPI;
@@ -22,10 +20,8 @@ class EverlyticServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([

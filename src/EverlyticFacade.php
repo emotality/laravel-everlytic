@@ -9,10 +9,8 @@ class EverlyticFacade
 {
     /**
      * Everlytic API class.
-     *
-     * @return \Emotality\Everlytic\EverlyticAPI
      */
-    private static function api()
+    private static function api(): EverlyticAPI
     {
         return App::get(EverlyticAPI::class);
     }

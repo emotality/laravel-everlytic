@@ -12,15 +12,14 @@ class EverlyticSms
     /**
      * SMS message.
      */
-    protected string $message;
+    protected ?string $message = null;
 
     /**
      * EverlyticSms constructor.
      *
-     * @param  string|array|null  $to
      * @return void
      */
-    public function __construct($to = null, ?string $message = null)
+    public function __construct(string|array|null $to = null, ?string $message = null)
     {
         if ($to) {
             $this->to = is_array($to) ? $to : [$to];

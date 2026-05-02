@@ -47,9 +47,17 @@ class EverlyticAPI
      */
     public function hasCredentials(): bool
     {
-        return strlen($this->config['username'] ?? null)
-            && strlen($this->config['password'] ?? null)
-            && strlen($this->config['url'] ?? null);
+        return $this->configValueIsFilled('username')
+            && $this->configValueIsFilled('password')
+            && $this->configValueIsFilled('url');
+    }
+
+    /**
+     * Check whether a config value is a non-empty string.
+     */
+    private function configValueIsFilled(string $key): bool
+    {
+        return trim(strval($this->config[$key] ?? '')) !== '';
     }
 
     /**
@@ -166,7 +174,7 @@ class EverlyticAPI
         }
 
         // Options
-        $options = collect($this->config['mail_options'])->only(['track_opens', 'track_links', 'batch_send'])->toArray();
+        $options = collect($this->config['mail_options'] ?? [])->only(['track_opens', 'track_links', 'batch_send'])->toArray();
 
         foreach ($options as $option => $value) {
             if (is_bool($value) || is_int($value)) {

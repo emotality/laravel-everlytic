@@ -2,13 +2,13 @@
     "preset": "laravel",
     "rules": {
         "array_indentation": true,
-        "single_line_comment_spacing": false,
         "binary_operator_spaces": {
             "default": "single_space",
             "operators": {
                 "=>": null
             }
         },
+        "fully_qualified_strict_types": false,
         "native_function_invocation": {
             "include": [],
             "strict": true
@@ -33,6 +33,7 @@
                     "deprecated"
                 ]
             ]
-        }
+        },
+        "single_line_comment_spacing": false
     }
 }
