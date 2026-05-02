@@ -1,40 +1,33 @@
 <?php
 
-namespace Emotality\Everlytic\Tests;
-
 use Emotality\Everlytic\EverlyticAPI;
 use Emotality\Everlytic\EverlyticException;
 
-class EverlyticApiTest extends TestCase
-{
-    public function test_has_credentials_returns_false_without_emitting_deprecations(): void
-    {
-        $deprecations = [];
+test('has credentials returns false without emitting deprecations', function (): void {
+    $deprecations = [];
 
-        set_error_handler(static function (int $severity, string $message) use (&$deprecations): bool {
-            if ($severity === E_DEPRECATED) {
-                $deprecations[] = $message;
+    set_error_handler(static function (int $severity, string $message) use (&$deprecations): bool {
+        if ($severity === E_DEPRECATED) {
+            $deprecations[] = $message;
 
-                return true;
-            }
-
-            return false;
-        });
-
-        try {
-            $this->assertFalse($this->app->make(EverlyticAPI::class)->hasCredentials());
-        } finally {
-            restore_error_handler();
+            return true;
         }
 
-        $this->assertSame([], $deprecations);
+        return false;
+    });
+
+    try {
+        expect($this->app->make(EverlyticAPI::class)->hasCredentials())->toBeFalse();
+    } finally {
+        restore_error_handler();
     }
 
-    public function test_run_checks_throws_when_credentials_are_missing(): void
-    {
-        $this->expectException(EverlyticException::class);
-        $this->expectExceptionMessage('Your Everlytic username, password and URL is required!');
+    expect($deprecations)->toBe([]);
+});
 
-        $this->app->make(EverlyticAPI::class)->runChecks();
-    }
-}
+test('run checks throws when credentials are missing', function (): void {
+    $this->expectException(EverlyticException::class);
+    $this->expectExceptionMessage('Your Everlytic username, password and URL is required!');
+
+    $this->app->make(EverlyticAPI::class)->runChecks();
+});

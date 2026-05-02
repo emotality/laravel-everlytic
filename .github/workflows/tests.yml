@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  phpunit:
+  pest:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -21,8 +21,8 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: none
 
-      - uses: ramsey/composer-install@v3
+      - run: composer update --prefer-dist --no-interaction
 
       - run: vendor/bin/pint --test
 
-      - run: composer test
+      - run: vendor/bin/pest

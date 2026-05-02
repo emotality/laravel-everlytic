@@ -28,12 +28,12 @@
         "symfony/mailer": "^6.0|^7.0"
     },
     "require-dev": {
-        "laravel/pint": "^1.21",
-        "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
-        "phpunit/phpunit": "^11.5"
+        "laravel/pint": "^1.15",
+        "orchestra/testbench": "^8.37|^9.0|^10.0|^11.0",
+        "pestphp/pest": "^1.23.1|^2.34|^3.7|^4.0"
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "test": "vendor/bin/pest"
     },
     "autoload": {
         "psr-4": {
@@ -56,6 +56,9 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
         "sort-packages": true
     },
     "minimum-stability": "dev",
