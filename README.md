@@ -14,11 +14,10 @@ Laravel package to send transactional SMSes and emails (mail driver) via Everlyt
     </a>
 </p>
 
-## Requirements
+## Minimum Requirements
 
-- PHP 8.0+ for Laravel 9-12
-- PHP 8.3+ for Laravel 13
-- Laravel 9.0+
+- PHP 8.1
+- Laravel 10
 
 ## Installation
 
